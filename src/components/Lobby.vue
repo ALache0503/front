@@ -71,6 +71,8 @@ import type {LobbyClient} from "@/websocket/LobbyClient.ts";
 import {LobbyActorRole} from "@/model/dto/LobbyActorRole.ts";
 import type {LobbyActor} from "@/model/dto/LobbyActor.ts";
 import {useUserStore} from "@/stores/user.ts";
+import {eventBus} from "@/bus/eventBus.ts";
+import {ChatType} from "@/model/enum/ChatType.ts";
 
 const props = defineProps<{
   lobbyId: string
@@ -91,6 +93,9 @@ const loadLobby = async () => {
 
     const {LobbyClient} = await import('@/websocket/LobbyClient');
     lobbyWs = new LobbyClient(props.lobbyId, handleLobbyUpdate);
+
+    // CHAT
+    eventBus.emit("chat:openChannel", {chatType: ChatType.LOBBY, targetId: lobbyDto.value.id})
   } else {
     await router.push(Routes.OVERVIEW); //ToDO add error
   }
@@ -206,11 +211,9 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(async () => {
-  try {
-    //await LobbyService.leaveLobby(props.lobbyId);
-  } finally {
-    await lobbyWs.disconnect();
-  }
+  eventBus.emit("chat:closeChannel", {chatType: ChatType.LOBBY, targetId: lobbyDto.value.id})
+
+  await lobbyWs.disconnect();
 });
 </script>
 <style scoped>

@@ -8,7 +8,7 @@ import {LobbyActorRole} from "@/model/dto/LobbyActorRole.ts";
 export class LobbyService {
     static async createLobby(): Promise<{ success: boolean; error?: string; lobbyId?: string }> {
         try {
-            const lobbyResponse = (await api.post<CreateLobbyResponse>("/gaming/lobby/create")).data;
+            const lobbyResponse = (await api.post<CreateLobbyResponse>("/lobby/create")).data;
 
             console.log(lobbyResponse);
 
@@ -32,7 +32,7 @@ export class LobbyService {
         }
 
         try {
-            const response = await api.post<LobbyDTO>(`/gaming/lobby/join/${lobbyId}`, role);
+            const response = await api.post<LobbyDTO>(`/lobby/join/${lobbyId}`, role);
 
             if (response.status !== HttpStatusCode.Ok) {
                 return {success: false, error: "Lobby nicht gefunden"}
@@ -50,7 +50,7 @@ export class LobbyService {
         }
 
         try {
-            const lobbyDto = (await api.get<LobbyDTO>(`/gaming/lobby/${lobbyId}`)).data;
+            const lobbyDto = (await api.get<LobbyDTO>(`/lobby/${lobbyId}`)).data;
 
             return {success: true, lobbyDto: lobbyDto};
         } catch (error: any) {
@@ -64,7 +64,7 @@ export class LobbyService {
         }
 
         try {
-            const response = (await api.patch(`/gaming/lobby/state/${lobbyId}`, newState));
+            const response = (await api.patch(`/lobby/state/${lobbyId}`, newState));
 
             if (response.status === HttpStatusCode.Ok) {
                 return {success: true}
@@ -85,7 +85,7 @@ export class LobbyService {
         }
 
         try {
-            const response = (await api.patch(`/gaming/lobby/role/${lobbyId}`, newRole));
+            const response = (await api.patch(`/lobby/role/${lobbyId}`, newRole));
 
             if (response.status === HttpStatusCode.Ok) {
                 return {success: true}

@@ -22,7 +22,7 @@
             </RouterLink>
           </li>
         </ul>
-        <p v-if="mainPageDTO" class="text-light d-flex m-0 me-2">Willkommen, {{ mainPageDTO.username }}</p>
+        <p v-if="username !== ''" class="text-light d-flex m-0 me-2">Willkommen, {{ username }}</p>
         <p v-else class="text-light d-flex m-0 me-2">Lädt..</p>
       </div>
     </div>
@@ -31,19 +31,18 @@
 
 <script lang="ts" setup>
 import api from "@/api/api.js";
-import type {MainPageDTO} from "@/model/dto/MainPageDTO.ts";
 import {onMounted, ref} from "vue";
 import {useUserStore} from "@/stores/user.ts";
 
-const mainPageDTO = ref<MainPageDTO | null>(null);
+const username = ref<string>("");
 
 const userStore = useUserStore();
 
 async function loadNavbar() {
-  const response = api.get <MainPageDTO>("/gaming/main");
-  mainPageDTO.value = (await response).data;
+  const response = api.get("/users/auth/username");
+  username.value = (await response).data;
 
-  userStore.setUsername(mainPageDTO.value.username);
+  userStore.setUsername(username.value);
 }
 
 onMounted(async () => {
