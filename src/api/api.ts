@@ -2,7 +2,7 @@ import axios, {type AxiosError, type AxiosInstance, type AxiosRequestConfig, Htt
 import router from "@/router";
 import {Routes} from "@/model/enum/Routes.ts";
 
-const API_BASE_URL = "http://localhost:8080/api/v1";
+const API_BASE_URL = "/api/v1";
 
 let isRefreshing = false;
 

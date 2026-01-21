@@ -12,7 +12,7 @@ export class ChatClient {
         this.onMessage = onMessage;
 
         this.client = new Client({
-            brokerURL: 'ws://localhost:8080/chat/ws',
+            brokerURL: `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/chat/ws`,
             reconnectDelay: 5000,
             heartbeatIncoming: 10000,
             heartbeatOutgoing: 10000,

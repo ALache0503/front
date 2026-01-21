@@ -15,4 +15,28 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         },
     },
+    server: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                secure: false
+            },
+            '/chat/ws': {
+                target: 'ws://localhost:8080',
+                changeOrigin: true,
+                ws: true
+            },
+            '/gaming/ws': {
+                target: 'ws://localhost:8080',
+                changeOrigin: true,
+                ws: true
+            },
+            '/mm/ws': {
+                target: 'ws://localhost:8080',
+                changeOrigin: true,
+                ws: true
+            }
+        }
+    }
 })

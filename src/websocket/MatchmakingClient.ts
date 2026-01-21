@@ -7,7 +7,7 @@ export class MatchmakingClient {
 
     constructor(onMessage: (msg: any) => void, onError: (msg: any) => void) {
         this.client = new Client({
-            brokerURL: 'ws://localhost:8080/mm/ws',
+            brokerURL: `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/chat/ws`,
             reconnectDelay: 5000,
             heartbeatIncoming: 10000,
             heartbeatOutgoing: 10000,
