@@ -7,7 +7,7 @@ export class LobbyClient {
     constructor(lobbyId: string, onMessage: (msg: any) => void) {
 
         this.client = new Client({
-            brokerURL: '${window.location.protocol === \'https:\' ? \'wss:\' : \'ws:\'}//${window.location.host}/gaming/ws',
+            brokerURL: `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/chat/ws`,
             reconnectDelay: 5000,
             heartbeatIncoming: 10000,
             heartbeatOutgoing: 10000,
